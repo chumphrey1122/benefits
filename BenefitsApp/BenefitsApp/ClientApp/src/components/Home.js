@@ -6,20 +6,30 @@ export class Home extends Component {
   render () {
     return (
       <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
+        <h1>Benefits Application</h1>
+        <p>This demo application was created by <a href="mailto:christina.humphrey2@gmail.com">Christina Humphrey</a> as a simple example to share with the folks at Paylocity. Please let her know if you have any questions! The specific tech stack used in this application is:</p>
         <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
+                <li>ASP.NET Core (.NET 6.0) and C# for the server side code</li>
+                <li>Azure SQL database</li>
+                <li>React for client-side code</li>
+                <li>Bootstrp for layout and styling</li>
+                <li>Nunit for unit testing (server-side)</li>
+                <li>Azure App Service as host environment</li>
         </ul>
-        <p>To help you get started, we have also set up:</p>
+        <p>Due to time constraints, this application is incomplete. There are multiple ways it can be enhanced and extended, some of which include:</p>
         <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
+            <li><strong>Authentication</strong>. This involves creating an Identity Server to return a JWT token to the JavaScript that can be sent with all AJAX requests to our backend, where it will be validated with middleware. This may also require:
+                <ul>
+                    <li>User account management and permissions infrastructure</li>
+                    <li>Password recovery (via email)</li>
+                </ul>
+                </li>
+            <li><strong>Paging, sorting and filtering employees</strong>. The ability to filter and sort the list of employees, which would also be paged in order to support larger numbers of individuals.</li>
+            <li><strong>Enhanced business rules</strong>. The current business rules are very simple (single company, fixed pay for all employees, single benefits plan), and could be enhanced in a more full-service application.</li>
+            <li><strong>Reports</strong>. The ability to provide historical reports for what an employee actually paid in each pay period. This would support possible changes in costs or dependents with time.</li>
+            <li><strong>"Self-serve" options</strong>. An employee would be able to enter their own dependents (but not see any other employee's details).</li>
+            </ul>
+        <p>To get started, just click on the <a href="/employees">Employees</a> navigation link in the top right, and see what happens next!</p>
       </div>
     );
   }

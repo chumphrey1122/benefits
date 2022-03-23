@@ -11,33 +11,31 @@ namespace BenefitsAppTests
     public class Tests
     {
         private IPayrollService _payrollService;
+        private int _payPeriodsPerYear;
 
         [SetUp]
         public void Setup()
         {
-            var myConfiguration = new Dictionary<string, string>
-            {
-                {"DefaultPayRate", "2000"},
-                {"PayPeriodsPerYear", "26" },
-                {"BaseBenefitsCost", "1000" },
-                {"BaseDependentBenefitCost", "500" },
-                {"DiscountRate",  "0.1" }
-            };
-
-            var configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(myConfiguration)
-                .Build();
-
+            var configuration = Configuration.Default;
+            _payPeriodsPerYear = configuration.GetValue<int>("PayPeriodsPerYear");
             _payrollService = new StandardPayrollService(configuration, new TestBenefitsContextProvider());
         }
 
-        [TestCase(1, 50500)]
-        public void TestPayroll(int id, decimal netPay)
+        /// <summary>
+        /// Test the payroll calculation. Note: To prevent rounding errors, we are 
+        /// setting there to be 25, not 26 paychecks per year for these tests.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="netYearlyPay"></param>
+        [TestCase(1, 49000)]
+        [TestCase(2, 47550)]
+        [TestCase(3, 48600)]
+        public void TestPayroll(int id, decimal netYearlyPay)
         {
             // Set up the tests
             var payroll = _payrollService.GetPayroll(id, CancellationToken.None).Result;
 
-            Assert.AreEqual(payroll.NetPay*26, netPay);
+            Assert.AreEqual(netYearlyPay, payroll.NetPay * _payPeriodsPerYear);
         }
     }
 }

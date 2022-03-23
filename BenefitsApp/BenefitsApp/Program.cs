@@ -9,6 +9,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IEmployeeService, StandardEmployeeService>();
 builder.Services.AddSingleton<IPayrollService, StandardPayrollService>();
 builder.Services.AddSingleton<IBenefitsContextProvider, StandardBenefitsContextProvider>();
+// Add Swagger. See https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-nswag?view=aspnetcore-6.0&tabs=visual-studio
+builder.Services.AddSwaggerDocument();
 
 var app = builder.Build();
 
@@ -21,6 +23,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseOpenApi();
+app.UseSwaggerUi3();
+
 app.UseRouting();
 
 

@@ -25,10 +25,10 @@ namespace BenefitsApp.Services
         public async Task<EmployeePayrollInformation> GetPayroll(int employeeId, CancellationToken cancellationToken)
         {
             var context = _benefitsContextProvider.GetContext();
-            // TODO: We should use a SQL view to get this data so we don't need to return all the dependents in one go
+            // TODO: We should use a SQL view to get this data so we don't need to get the full names of all dependents and employees (reduces the data sent back).
             var employee = await context.Employees.Include("Dependents").FirstOrDefaultAsync(x => x.Id == employeeId, cancellationToken);
             if (employee == null)
-                return null;
+                return null; // TODO: should we return null in this case, or throw an exception?
             return this.GetPayroll(employee);
         }
 

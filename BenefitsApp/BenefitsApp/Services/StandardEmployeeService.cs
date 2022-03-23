@@ -7,11 +7,15 @@ namespace BenefitsApp.Services
     internal class StandardEmployeeService : IEmployeeService
     {
         private IBenefitsContextProvider _benefitsContextProvider;
+        private decimal _defaultPayRate;
 
-        public StandardEmployeeService(IBenefitsContextProvider benefitsContextProvider)
+        public StandardEmployeeService(IBenefitsContextProvider benefitsContextProvider, IConfiguration configuration)
         {
             _benefitsContextProvider = benefitsContextProvider;
+            _defaultPayRate = configuration.GetValue<decimal>("DefaultPayRate");
         }
+
+        /// <inheritdoc/>
         public async Task<List<Employee>> GetEmployeesAsync(CancellationToken cancellationToken)
         {
             var context = _benefitsContextProvider.GetContext();
@@ -19,19 +23,21 @@ namespace BenefitsApp.Services
             return employees;
         }
 
+        /// <inheritdoc/>
         public async Task<Employee> GetEmployeeByIdAsync(int employeeId, CancellationToken cancellationToken)
         {
             var context = _benefitsContextProvider.GetContext();
             var employee = await context.Employees.Include("Dependents").FirstOrDefaultAsync(x=>x.Id == employeeId, cancellationToken);
             return employee;
         }
-        public async Task<Employee> CreateEmployeeAsync(string firstName, string lastName, decimal payRate)
+
+        public async Task<Employee> CreateEmployeeAsync(string firstName, string lastName)
         {
             var employee = new Employee()
             {
                 FirstName = firstName,
                 LastName = lastName,
-                PayRate = payRate
+                PayRate = _defaultPayRate,
             };
             var context = _benefitsContextProvider.GetContext();
             context.Employees.Add(employee);
@@ -41,6 +47,7 @@ namespace BenefitsApp.Services
 
         public async Task<Dependent> CreateDependentAsync(int employeeId, string firstName, string lastName)
         {
+            // TODO: properly handle the case that the employeeId doesn't exist, rather than relying on a SQL foreign key violation error.
             var dependent = new Dependent()
             {
                 EmployeeId = employeeId,
@@ -55,6 +62,7 @@ namespace BenefitsApp.Services
 
         public async Task DeleteDependentAsync(int employeeId, int dependentId)
         {
+            // TODO: We should really check if the employeeId exists, and if not throw an exception
             var context = _benefitsContextProvider.GetContext();
             var dependent = await context.Dependents.FirstOrDefaultAsync(x => x.EmployeeId == employeeId && x.Id == dependentId);
             if (dependent != null)

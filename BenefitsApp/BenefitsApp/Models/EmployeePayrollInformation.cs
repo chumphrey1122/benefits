@@ -1,5 +1,10 @@
 ﻿namespace BenefitsApp.Models
 {
+    /// <summary>
+    /// Information about a user's pay and payroll deductions.
+    /// 
+    /// TODO: Do we need all of these properties? Not all of them are explicitly being used by the front end.
+    /// </summary>
     public class EmployeePayrollInformation
     {
         public decimal PayPerPeriod { get; set; }

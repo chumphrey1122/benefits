@@ -8,7 +8,7 @@ export class EmployeeAndDependents extends Component {
     // TODO: Move the Payroll Preview to a separate Component
     constructor(props) {
         super(props);
-        // https://stackoverflow.com/questions/149055/how-to-format-numbers-as-currency-strings
+        // How to format a Javascript number as currency: https://stackoverflow.com/questions/149055/how-to-format-numbers-as-currency-strings
         this.moneyFormatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
@@ -91,6 +91,9 @@ export class EmployeeAndDependents extends Component {
     }
 
     async addDependent() {
+        // TODO: rather than copying the standard "headers" lots of places in the code, we may want to move the fetch call to 
+        // a reusable JavaScript class (service) that can will correctly provide the headers, etc. This will be very important
+        // if we later support authentication, since we'd need to add a JWT token to the headers
         const response = await fetch('api/employees/' + encodeURIComponent(this.props.match.params.id) + '/dependents', {
             method: 'POST',
             headers: {'Content-Type':'application/json'},

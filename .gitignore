@@ -7,3 +7,5 @@
 /BenefitsApp/BenefitsApp/appsettings.Development.json
 /BenefitsApp/BenefitsAppTests/obj
 /BenefitsApp/BenefitsAppTests/bin/Debug/net6.0
+/BenefitsApp/BenefitsApp/Properties/ServiceDependencies/BenefitsApp - Web Deploy
+/BenefitsApp/BenefitsAppTests/bin/Release/net6.0

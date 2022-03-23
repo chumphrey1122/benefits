@@ -9,6 +9,8 @@ export class Employees extends Component {
         this.state = { employees: [], firstName: "", lastName: "" };
     }
 
+    // TODO: Every time we navigate to this view, we call the API to get the employee list, even if it hasn't changed.
+    // This is inefficient. We could probably rewrite this to store it in global state using a library like Redux
     componentDidMount() {
         this.populateEmployees();
     }
