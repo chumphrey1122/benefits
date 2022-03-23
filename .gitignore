@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/BenefitsApp/.vs/BenefitsApp
+/BenefitsApp/BenefitsApp/appsettings.Development.json
+/BenefitsApp/BenefitsAppTests/obj
+/BenefitsApp/BenefitsAppTests/bin/Debug/net6.0
